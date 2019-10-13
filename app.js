@@ -15,6 +15,7 @@ const cors = require('cors');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const technologyRouter = require('./routes/technologyRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -96,6 +97,7 @@ app.use((req, res, next) => {
 // ROUTES
 
 app.use('/api/v1/technologies', technologyRouter);
+app.use('/api/v1/users', userRouter);
 
 app.all('*', (req, res, next) => {
   // NOTE: whenever we pass anything into next express knows it's an error
