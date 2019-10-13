@@ -1,0 +1,90 @@
+{
+  "technologies": [
+    {
+      "description": "I gained professional experience in Angular 2+ by working for different companies for a whole year and through some small personal projects. I worked side by side with some amazing engineers that transmitted to me their Angular enthusiasm. I personally enjoy this framework very much and hope that I will have the chance to use it more in the future. The main thing that I appreciate about Angular is the modularity of each small component which makes it highly scalable for web applications.",
+      "expColor": "#FFC54C",
+      "experience": "41",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/angular-logo.png?alt=media&token=3cdad28f-64b0-47d7-91bc-7d995d892aa4",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/javascript-logo.png?alt=media&token=8bbd9c1e-d660-4cc9-907b-7ffe97b53122"
+      ],
+      "name": "angular"
+    },
+    {
+      "description": "In the project I am currently part of at Credit Suisse AG, we are developing our web application using React and Redux. After a few weeks of introduction to this library + state management combo I was able to understand the advantages of using these technologies for the scope of our project. I am now highly involved in the development of our web app and I keep learning the ‘react’ way of doing front-end development.",
+      "expColor": "#6FFF6F",
+      "experience": "35",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/react-logo.png?alt=media&token=da3c34e4-c41b-4f3a-af44-6537529d25bf",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/redux-logo.png?alt=media&token=88cb30d2-d912-41b5-9002-c52412da284c"
+      ],
+      "name": "react + redux"
+    },
+    {
+      "description": "During my experience in front-end development I have used extensively HTML5 and pre-compiler SCSS along with the awesome Bootstrap Library and its angular powered version, NG-Bootstrap. I find Bootstrap, and especially NG-Bootstrap, very useful and great to speed up the workflow and responsive development. I have used TypeScript mainly for all my front-end development, so I am most familiar with JavaScript as a programming language.",
+      "expColor": "#FFC54C",
+      "experience": "45",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/css3-logo.png?alt=media&token=6bf949f3-3acc-4168-bfd1-7d843c8eb556",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/html5-logo.png?alt=media&token=866690a6-1216-4a2c-9972-f7cf25c336f9",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/bootstrap4-logo.png?alt=media&token=78333ce8-e0fe-44cd-88a6-49f270521590",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/ng-bootstrap-logo.png?alt=media&token=7e61c650-3c1d-4806-b4d3-a9d37e39515d"
+      ],
+      "name": "front-end dev tools"
+    },
+    {
+      "description": "While working mainly on front-end development, I also had the opportunity to work on tasks that involved the back-end. Regarding the environment, I have used Java within IntelliJ for half a year and C# within .NET for the remaining half of the year. In both cases a RESTful API was used and updated accordingly to make the HTTP requests.",
+      "expColor": "#6FFF6F",
+      "experience": "30",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/c-sharp-logo.png?alt=media&token=bd4b78f8-aeef-4cf8-9d90-0d4b2b695c08",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/java-logo.png?alt=media&token=15825609-2922-4dd4-a070-9f4c287ff2c4",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/restful-logo.png?alt=media&token=84587d7b-b49b-4485-895f-7d798c8b977f"
+      ],
+      "name": "back-end dev tools"
+    },
+    {
+      "description": "I had the chance to develop E2E, integration, and unit tests during my first 6-month internship and I enjoyed the scalability that these tests offer in terms of quality assurance. I got to use mainly FE technologies such as Jasmine, Selenium, Cucumber, but also JUnit for some tests in the backend. At my current position we use Jest and Enzyme for unit testing with React.  I believe testing is key to creating a proper user experience, to deliver quality products, and to scale as needed. I think any application should have some automation in place whether or not the application will grow.",
+      "expColor": "#6FFF6F",
+      "experience": "30",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/cucumber-logo.png?alt=media&token=5de27963-3763-4752-8718-d12af1903c93",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/jest-logo.png?alt=media&token=db3fd1fd-3c8b-4a01-8411-71ad179cc3f2",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/selenium-logo.png?alt=media&token=11aec9cf-7093-4eb0-a0f6-1c911c480f03"
+      ],
+      "name": "automation testing"
+    },
+    {
+      "description": "As part of my degree I had the opportunity to take a Machine Learning class taught in MATLAB and a Data Mining and Analytics class in R. Both classes discussed ML algorithms and statistical models used in data manipulation and forecasting. I also completed a few DataCamp tutorials for data manipulation in Python. I look forward to opportunities where I can apply this knowledge to real world examples.",
+      "expColor": "#6FFF6F",
+      "experience": "25",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/matlab-logo.png?alt=media&token=16b93962-a21b-43bc-931d-b22bc048a885",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/python-logo.png?alt=media&token=c71f0cc1-b120-42a6-8f48-96cc3f7432db",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/r-logo.png?alt=media&token=4249acdc-fa3d-48a8-b484-201aba21fd19"
+      ],
+      "name": "data science"
+    },
+    {
+      "description": "During my experience at NetApp, Inc. I was surrounded by and have learned from engineering experts in Data Storage and Networking. The duties of a QA Engineer were not only to test firmware and hardware, but also to set up complete storage configurations from scratch, from mounting the racks where the trays will lay, to install and set up Linux and Windows servers connected to the drive trays. Beside the constant usage of iSCSI, SAS, FC, I focused on the InfiniBand protocol for the final part of my time at NetApp.",
+      "expColor": "#FFC54C",
+      "experience": "45",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/linux-logo.png?alt=media&token=2ddc3ace-30c8-4521-a8e0-af9c1bf76294",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/netapp-logo.png?alt=media&token=76546fc8-2a43-41fa-98b2-39d3a77905a8",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/windows-logo.png?alt=media&token=95c4a12c-9168-4dc9-a27c-7a3cdea99424"
+      ],
+      "name": "data storage and network"
+    },
+    {
+      "description": "From my past work experience to the class work done in college, I was able to absorb concepts and gain hands-on skills about relational databases. I was first introduced to MS SQL Server at my University where a laid a solid foundation on how relational DBs work. Then, I had the opportunity to put in practice what learned by using it during my past internships. I had exposure to Oracle SQL Developer in my last role, which is similar to MS SQL.",
+      "expColor": "#6FFF6F",
+      "experience": "29",
+      "logos": [
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/oracle-sql-logo.png?alt=media&token=55200951-a0fb-4b77-9814-dac96ea05211",
+        "https://firebasestorage.googleapis.com/v0/b/leonardo-web.appspot.com/o/ms-sql-logo.png?alt=media&token=d339ccbd-2c42-4fe5-bd30-848921f0a826"
+      ],
+      "name": "relational databases"
+    }
+  ]
+}
