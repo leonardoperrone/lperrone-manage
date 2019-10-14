@@ -32,9 +32,13 @@ app.enable('trust proxy');
 app.use(cors());
 
 // NOTE: with this below we would allow our frontend to access our api on the server
+
 app.use(
   cors({
-    origin: 'frontend domain'
+    origin:
+      process.env.NODE_ENV === 'development'
+        ? process.env.FRONTEND_LOCAL_URL
+        : process.env.FRONTEND_PROD_URL
   })
 );
 
