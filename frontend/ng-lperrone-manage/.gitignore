@@ -41,7 +41,7 @@ testem.log
 /typings
 private/
 *.env
-.idea/
+.idea
 
 # System Files
 .DS_Store
