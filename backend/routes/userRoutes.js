@@ -6,6 +6,8 @@ const router = express.Router();
 
 // TODO: to be removed eventually
 // router.post('/signup', authController.signup);
+
+router.get('/isLoggedIn', authController.isUserLoggedIn);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 

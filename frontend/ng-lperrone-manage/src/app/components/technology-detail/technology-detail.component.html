@@ -1,0 +1,32 @@
+<div class="tech-container">
+  <div class="logo">
+    <ng-container *ngIf="technology.logos[0]">
+      <img
+        *ngFor="let logo of technology.logos"
+        [src]="logo"
+        alt="Logo + {{ technology.name }}"
+      />
+    </ng-container>
+  </div>
+
+  <div class="detail-container">
+    <div class="tech-header">
+      <div class="title">
+        {{ technology.name | titlecase }}
+      </div>
+      <div class="progress-bar">
+        <app-svg-viewer
+          [svgSpecs]="{
+            experience: technology.experience,
+            expColor: technology.expColor
+          }"
+        ></app-svg-viewer>
+      </div>
+    </div>
+    <div class="description">
+      <p>
+        {{ technology.description }}
+      </p>
+    </div>
+  </div>
+</div>

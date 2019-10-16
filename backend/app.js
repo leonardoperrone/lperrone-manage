@@ -14,6 +14,7 @@ const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+const authController = require('./controllers/authController');
 const technologyRouter = require('./routes/technologyRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -99,7 +100,7 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-
+app.get('/', authController.isUserLoggedIn);
 app.use('/api/v1/technologies', technologyRouter);
 app.use('/api/v1/users', userRouter);
 

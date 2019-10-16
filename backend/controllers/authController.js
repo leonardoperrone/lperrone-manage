@@ -69,6 +69,57 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
+exports.isLoggedIn = async (req, res, next) => {
+  // 1. get token and check if it exists
+
+  if (req.cookies.jwt) {
+    try {
+      // 1. verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2. check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) return next();
+
+      // There's a logged in user
+      res.locals.user = currentUser;
+      return next();
+    } catch (error) {
+      return next();
+    }
+  }
+  next();
+};
+
+exports.isUserLoggedIn = catchAsync(async (req, res, next) => {
+  // 1. get token and check if it exists
+
+  if (req.cookies.jwt) {
+    try {
+      // 1. verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2. check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) return next();
+
+      // There's a logged in user
+      res.locals.user = currentUser;
+
+      res.status(200).json({ status: 'success', isLoggedIn: true });
+    } catch (error) {
+      res.status(403).json({ status: 'fail', message: error.message });
+    }
+  }
+  res.status(403).json({ status: 'fail', isLoggedIn: false });
+});
+
 exports.logout = (req, res) => {
   res.cookie('jwt', 'logged-out', {
     expires: new Date(Date.now() + 10 * 1000),
