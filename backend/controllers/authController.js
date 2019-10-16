@@ -13,7 +13,6 @@ const signToken = id => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
-  console.log(req);
   res.cookie('jwt', token, {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -33,22 +32,6 @@ const createSendToken = (user, statusCode, req, res) => {
     }
   });
 };
-
-// TODO: to be removed eventually
-// exports.signup = catchAsync(async (req, res, next) => {
-//   // NOTE: This way below is NOT secure, someone could easily add a role to the body when signing up and set themselves as admin
-//   // const newUser = await User.create(req.body);
-//   // This is better because we only save the requried fields. All users will be just users, they shouldn't be allowed to pick roles
-//   const { email, password, passwordConfirm } = req.body;
-
-//   const newUser = await User.create({
-//     email,
-//     password,
-//     passwordConfirm
-//   });
-
-//   createSendToken(newUser, 201, req, res);
-// });
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;

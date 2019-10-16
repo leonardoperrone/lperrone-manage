@@ -10,7 +10,8 @@ import { SvgViewerComponent } from './commons/svg-viewer/svg-viewer.component';
 import { EditModalComponent } from './components/edit-modal/edit-modal.component';
 import { LoginComponent } from './pages/login/login.component';
 import { TechnologyDetailComponent } from './components/technology-detail/technology-detail.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,9 +27,10 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

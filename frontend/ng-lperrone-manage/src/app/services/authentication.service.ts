@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { map } from 'rxjs/operators';
@@ -9,29 +9,44 @@ import { map } from 'rxjs/operators';
 })
 export class AuthenticationService {
   public currentUser: Observable<User>;
-  public currentUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  
-  private isLoggedIn = false;
+  public isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private currentUserSubject: BehaviorSubject<User>;
+
   constructor(private http: HttpClient) {
-    
-   }
+    // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+
+
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
 
   login(email, password) {
-    return from(this.http.post<any>('http://127.0.0.1:3000/api/v1/users/login', { email, password })).pipe(map(user => {
-      this.isLoggedIn = true;
-      this.currentUserSubject.next(true)
-    }))
+    return from(this.http.post<any>('http://127.0.0.1:3000/api/v1/users/login', {email, password})).pipe(map(user => {
+
+      if (user && user.token) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        this.isLoggedIn.next(true);
+      } else {
+        return false;
+      }
+      return user;
+    }));
   }
 
   logout() {
-    this.isLoggedIn = false;
-    this.currentUserSubject.next(false)
-    return from(this.http.get('http://127.0.0.1:3000/api/v1/users/logout'))
+    this.isLoggedIn.next(false);
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    return from(this.http.get('http://127.0.0.1:3000/api/v1/users/logout'));
   }
-  
+
   isUserLoggedIn() {
-    // return await this.http.get('http://127.0.0.1:3000/api/v1/')
-    return this.currentUserSubject;
+    return this.isLoggedIn.asObservable();
   }
-  
+
 }

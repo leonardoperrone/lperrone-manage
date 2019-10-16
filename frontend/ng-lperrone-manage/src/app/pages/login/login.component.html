@@ -1,17 +1,14 @@
-<div class="col-md-6 offset-md-3 mt-5">
-  <div class="alert alert-info">
-    email: test<br />
-    Password: test
-  </div>
+<div class="col-md-6 offset-md-3 mt-5 login-container">
   <div class="card">
-    <h4 class="card-header">Angular 8 Basic Auth Login Example</h4>
+    <h4 class="card-header">Login</h4>
     <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="email">email</label>
           <input
-            type="text"
-            formControlName=""
+            type="email"
+            formControlName="email"
+            id="email"
             class="form-control"
             [ngClass]="{
               'is-invalid': submitted && loginForm.controls.email.errors
@@ -21,7 +18,7 @@
             *ngIf="submitted && loginForm.controls.email.errors"
             class="invalid-feedback"
           >
-            <div *ngIf=".email.errors.required">email is required</div>
+            <div *ngIf="loginForm.controls.email.errors.required">email is required</div>
           </div>
         </div>
         <div class="form-group">
@@ -29,6 +26,7 @@
           <input
             type="password"
             formControlName="password"
+            id="password"
             class="form-control"
             [ngClass]="{
               'is-invalid': submitted && loginForm.controls.password.errors
@@ -50,8 +48,8 @@
           ></span>
           Login
         </button>
-        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
-          {{ error }}
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+          {{ errorMessage }}
         </div>
       </form>
     </div>
