@@ -39,7 +39,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-private/
+backend/private/
 *.env
 .idea
 
