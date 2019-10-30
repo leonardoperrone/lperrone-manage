@@ -1,3 +1,382 @@
-<p>
-  edit-modal works!
-</p>
+<ng-template #longContent let-c="close" let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button (click)="c('Cross click')" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form (ngSubmit)="onSubmit(techForm)" *ngIf="isTech" [formGroup]="techForm">
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && techForm.controls.name.errors
+            }"
+          class="form-control"
+          formControlName="name"
+          id="name"
+          type="text"
+        />
+        <div
+          *ngIf="submitted && techForm.controls.name.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="techForm.controls.name.errors.required">Name is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+            #description
+            [ngClass]="{
+              'is-invalid': submitted && techForm.controls.description.errors
+            }"
+            class="form-control"
+            formControlName="description"
+            id="description"
+            type="text"
+        ></textarea>
+        <small><code>{{description.value.length}}/520</code></small>
+        <div
+          *ngIf="submitted && techForm.controls.description.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="techForm.controls.description.errors.required">Description is required</div>
+          <div *ngIf="techForm.controls.description.errors.maxlength">Description is has to be less than 520</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && techForm.controls.experience.errors
+            }"
+          class="form-control"
+          formControlName="experience"
+          id="experience"
+          type="number"
+        />
+        <div
+          *ngIf="submitted && techForm.controls.experience.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="techForm.controls.experience.errors.required">Experience is required</div>
+          <div *ngIf="techForm.controls.experience.errors.max">Experience can only be between 0 and 100</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tech-order-index">Index</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && techForm.controls.orderIndex.errors || !isIndexUnique
+            }"
+          class="form-control"
+          formControlName="orderIndex"
+          id="tech-order-index"
+          type="number"
+        />
+        <div
+          *ngIf="submitted && techForm.controls.orderIndex.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="techForm.controls.orderIndex.errors.required">Index is required</div>
+        </div>
+        <div *ngIf="!isIndexUnique" class="invalid-feedback">Index is in use</div>
+        <div *ngIf="nextIndex" class="invalid-feedback">Next lowest index: {{nextIndex}}</div>
+      </div>
+
+      <div *ngIf="isCreateMode" class="form-group">
+        <app-file-upload [fileName]="'logos'" [progress]="progress" formControlName="logos"></app-file-upload>
+        <div
+          *ngIf="submitted && techForm.controls.logos.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="techForm.controls.logos.errors.required">
+            Logo is required
+          </div>
+        </div>
+      </div>
+
+      <button [disabled]="loading" class="btn btn-primary float-right">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+        Save
+      </button>
+      <button (click)="deleteTech(technology._id)" *ngIf="isEditMode" [disabled]="loading" class="btn btn-danger">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+        Delete
+      </button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+        {{ errorMessage }}
+      </div>
+    </form>
+
+    <form (ngSubmit)="onSubmit(projectForm)" *ngIf="isProject" [formGroup]="projectForm">
+
+      <div class="form-group">
+        <label for="project-name">Name</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && projectForm.controls.name.errors
+            }"
+          class="form-control"
+          formControlName="name"
+          id="project-name"
+          type="text"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls.name.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.name.errors.required">Name is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="project-description">Description</label>
+        <textarea
+            #description
+            [ngClass]="{
+              'is-invalid': submitted && projectForm.controls.description.errors
+            }"
+            class="form-control"
+            formControlName="description"
+            id="project-description"
+            type="text"
+        ></textarea>
+        <small><code>{{description.value.length}}/1050</code></small>
+        <div
+          *ngIf="submitted && projectForm.controls.description.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.description.errors.required">Description is required</div>
+          <div *ngIf="projectForm.controls.description.errors.maxlength">Description is has to be less than 1020</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="project-city">City</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && projectForm.controls.city.errors
+            }"
+          class="form-control"
+          formControlName="city"
+          id="project-city"
+          type="text"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls.city.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.city.errors.required">City is required</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="project-country">Country</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && projectForm.controls.country.errors
+            }"
+          class="form-control"
+          formControlName="country"
+          id="project-country"
+          type="text"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls.country.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.country.errors.required">Country is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="project-year">Year</label>
+        <input
+          [ngClass]="{
+              'is-invalid': submitted && projectForm.controls.year.errors
+            }"
+          class="form-control"
+          formControlName="year"
+          id="project-year"
+          type="number"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls.year.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.year.errors.required">Year is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="project-order-index">Index</label>
+        <input
+          [ngClass]="{
+              'is-invalid': (submitted && projectForm.controls.orderIndex.errors) || !isIndexUnique
+            }"
+          class="form-control"
+          formControlName="orderIndex"
+          id="project-order-index"
+          type="number"
+        />
+        <div
+          *ngIf="submitted && projectForm.controls.orderIndex.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.orderIndex.errors.required">Index is required</div>
+        </div>
+        <div *ngIf="!isIndexUnique" class="invalid-feedback">Index is in use</div>
+        <div *ngIf="nextIndex" class="invalid-feedback">Next lowest index: {{nextIndex}}</div>
+      </div>
+
+      <div *ngIf="isCreateMode" class="form-group">
+        <app-file-upload [fileName]="'logos'" [progress]="progress" formControlName="logos"></app-file-upload>
+        <div
+          *ngIf="submitted && projectForm.controls.logos.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.logos.errors.required">
+            Logo(s) is required
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isCreateMode" class="form-group">
+        <app-file-upload [fileName]="'pictures'" [progress]="progress" formControlName="pictures"></app-file-upload>
+        <div
+          *ngIf="submitted && projectForm.controls.pictures.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="projectForm.controls.pictures.errors.required">
+            Picture(s) is required
+          </div>
+        </div>
+      </div>
+
+      <button [disabled]="loading" class="btn btn-primary float-right">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+        Save
+      </button>
+      <button (click)="deleteProject(project._id)" *ngIf="isEditMode" [disabled]="loading" class="btn btn-danger">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+        Delete
+      </button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+        {{ errorMessage }}
+      </div>
+    </form>
+
+  </div>
+</ng-template>
+
+<ng-template #longContentLogos let-c="close" let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Upload logos</h4>
+    <button (click)="c('Cross click')" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form (ngSubmit)="onSubmit(logosForm)" [formGroup]="logosForm">
+      <div class="form-group">
+        <app-file-upload [fileName]="'logos'" [progress]="progress" formControlName="logos"></app-file-upload>
+        <div
+          *ngIf="submitted && logosForm.controls.logos.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="logosForm.controls.logos.errors.required">
+            Logo is required
+          </div>
+        </div>
+      </div>
+
+      <button [disabled]="loading" class="btn btn-primary float-right">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+        Upload
+      </button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+        {{ errorMessage }}
+      </div>
+    </form>
+
+  </div>
+  <!--  <div class="modal-footer">-->
+  <!--    <button class="btn btn-light" type="button">Save</button>-->
+  <!--  </div>-->
+</ng-template>
+
+
+<ng-template #longContentPictures let-c="close" let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Upload pictures</h4>
+    <button (click)="c('Cross click')" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form (ngSubmit)="onSubmit(picForm)" [formGroup]="picForm">
+      <div class="form-group">
+        <app-file-upload [fileName]="'pictures'" [progress]="progress" formControlName="pictures"></app-file-upload>
+        <div
+          *ngIf="submitted && picForm.controls.pictures.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="picForm.controls.pictures.errors.required">
+            Picture(s) is required
+          </div>
+        </div>
+      </div>
+
+      <button [disabled]="loading" class="btn btn-primary float-right">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+        Upload
+      </button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+        {{ errorMessage }}
+      </div>
+    </form>
+
+  </div>
+  <!--  <div class="modal-footer">-->
+  <!--    <button class="btn btn-light" type="button">Save</button>-->
+  <!--  </div>-->
+</ng-template>
+
+<button (click)="openScrollableContent(longContent)" *ngIf="isEditMode" class="btn btn-outline-primary mb-2 mr-2">Edit
+</button>
+<button (click)="openScrollableContent(longContentLogos)" *ngIf="isEditMode" class="btn btn-outline-primary mb-2 mr-2">
+  Upload Logos
+</button>
+<button (click)="openScrollableContent(longContentPictures)" *ngIf="isProject && isEditMode"
+        class="btn btn-outline-primary mb-2 mr-2">Upload Pictures
+</button>
+<button (click)="openScrollableContent(longContent)" *ngIf="isCreateMode" class="btn btn-outline-dark">Create</button>

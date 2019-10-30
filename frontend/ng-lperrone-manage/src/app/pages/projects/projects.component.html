@@ -1,0 +1,9 @@
+<div class="btn-create-container">
+  <app-edit-modal  *ngIf="loaded" [mode]="'create'" [indexes]="indexes" [nextIndex]="nextIndex"></app-edit-modal>
+
+</div>
+<div class="grid" *ngIf="loaded">
+  <div class="project-item" *ngFor="let project of projects">
+    <app-project-detail [project]="project" [indexes]="indexes" [nextIndex]="nextIndex"> </app-project-detail>
+  </div>
+</div>

@@ -1,11 +1,16 @@
 <div class="tech-container">
   <div class="logo">
+    <div class="edit-button-container">
+      <app-edit-modal [mode]="mode" [technology]="technology" [indexes]="indexes" [nextIndex]="nextIndex"></app-edit-modal>
+    </div>
     <ng-container *ngIf="technology.logos[0]">
-      <img
-        *ngFor="let logo of technology.logos"
-        [src]="logo"
-        alt="Logo + {{ technology.name }}"
-      />
+      <div *ngFor="let logo of technology.logos;let i = index">
+        <img
+          (click)="deleteLogo(technology._id, i)"
+          [src]="logo"
+          alt="Logo {{ technology.name }}"
+        />
+      </div>
     </ng-container>
   </div>
 
@@ -29,4 +34,8 @@
       </p>
     </div>
   </div>
+
+
 </div>
+
+

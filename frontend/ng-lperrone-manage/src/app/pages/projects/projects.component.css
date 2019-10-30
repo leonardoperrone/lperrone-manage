@@ -1,0 +1,17 @@
+.grid {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-column-gap: 96px;
+  justify-content: center;
+}
+
+.project-item {
+  margin-bottom: 135px;
+}
+
+.btn-create-container {
+  padding-left: 170px;
+}
+
+/*# sourceMappingURL=projects.component.css.map */

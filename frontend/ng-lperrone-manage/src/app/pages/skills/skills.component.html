@@ -1,0 +1,9 @@
+<div class="btn-create-container">
+  <app-edit-modal [mode]="'create'" [indexes]="indexes" [nextIndex]="nextIndex"></app-edit-modal>
+
+</div>
+<div class="grid" *ngIf="loaded">
+  <div class="tech-item" *ngFor="let tech of technologies">
+    <app-technology-detail [technology]="tech"  [indexes]="indexes" [nextIndex]="nextIndex"> </app-technology-detail>
+  </div>
+</div>

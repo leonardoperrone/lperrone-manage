@@ -14,17 +14,11 @@ const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const authController = require('./controllers/authController');
 const technologyRouter = require('./routes/technologyRoutes');
 const userRouter = require('./routes/userRoutes');
+const projectRouter = require('./routes/projectRoutes');
 
 const app = express();
-
-// admin.initializeApp({
-//   credential: admin.credential.applicationDefault(),
-//   //   databaseURL: 'https://leonardo-web.firebaseio.com',
-//   storageBucket: 'leonardo-web.appspot.com.appspot.com'
-// });
 
 app.enable('trust proxy');
 
@@ -80,18 +74,9 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: ['experience', 'orderIndex']
-  })
-);
+app.use(hpp());
 
 app.use(compression());
-
-// app.use((req, res, next) => {
-//   console.log('Hello from the middleware');
-//   next();
-// });
 
 // Test middleware
 app.use((req, res, next) => {
@@ -100,9 +85,9 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-app.get('/', authController.isUserLoggedIn);
-app.use('/api/v1/technologies', technologyRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/technologies', technologyRouter);
+app.use('/api/v1/projects', projectRouter);
 
 app.all('*', (req, res, next) => {
   // NOTE: whenever we pass anything into next express knows it's an error

@@ -4,15 +4,13 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-// router.param('id', tourController.checkId);
-
 router
   .route('/')
   .get(technologyController.getTechologies)
   .post(
     authController.protect,
-    technologyController.uploadTechImages,
-    technologyController.resizeTechImages,
+    technologyController.uploadTechFiles,
+    technologyController.resizeTechPictures,
     technologyController.createTechology
   );
 
@@ -21,10 +19,18 @@ router
   .get(technologyController.getTechology)
   .patch(
     authController.protect,
-    technologyController.uploadTechImages,
-    technologyController.resizeTechImages,
+    technologyController.uploadTechFiles,
+    technologyController.resizeTechPictures,
     technologyController.updateTechology
   )
-  .delete(authController.protect, technologyController.deleteTechology);
+  .delete(
+    authController.protect,
+    technologyController.deleteTechnologyLogos,
+    technologyController.deleteTechology
+  );
+
+router
+  .route('/:id/logo/:logoId')
+  .delete(authController.protect, technologyController.deleteTechLogo);
 
 module.exports = router;

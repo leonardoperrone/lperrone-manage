@@ -25,9 +25,15 @@ export class AuthenticationService {
   }
 
   login(email, password) {
-    return from(this.http.post<any>('http://127.0.0.1:3000/api/v1/users/login', {email, password})).pipe(map(user => {
-
-      if (user && user.token) {
+    return from(this.http.post<any>('http://127.0.0.1:3000/api/v1/users/login', {email, password})).pipe(map(res => {
+      console.log(res);
+      const {data, token} = res;
+      const user = new User();
+      user._id = data.user._id;
+      user.email = data.user.email;
+      user.token = token;
+      if (data && data.user && token) {
+        console.log('in here');
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         this.isLoggedIn.next(true);
@@ -45,8 +51,7 @@ export class AuthenticationService {
     return from(this.http.get('http://127.0.0.1:3000/api/v1/users/logout'));
   }
 
-  isUserLoggedIn() {
-    return this.isLoggedIn.asObservable();
+  public getToken(): string {
+    return localStorage.getItem('currentUser') ?  JSON.parse(localStorage.getItem('currentUser'))['token'] : null;
   }
-
 }
