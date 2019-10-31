@@ -35,6 +35,9 @@ const projectSchema = new mongoose.Schema({
   }
 });
 
+projectSchema.index({ orderIndex: 1 });
+
+
 const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project;

@@ -6,11 +6,12 @@ const sharp = require('sharp');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
+const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(JSON.parse(serviceAccount)),
   storageBucket: 'leonardo-web.appspot.com'
 });
-
 const bucket = admin.storage().bucket();
 
 const multerStorage = multer.memoryStorage();
