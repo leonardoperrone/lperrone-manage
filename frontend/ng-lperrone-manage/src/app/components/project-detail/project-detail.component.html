@@ -1,0 +1,47 @@
+<div class="project-container">
+  <div class="project-logo">
+    <div class="edit-button-container">
+      <app-edit-modal [mode]="mode" [project]="project" [indexes]="indexes" [nextIndex]="nextIndex"></app-edit-modal>
+    </div>
+    <ng-container *ngIf="project.logos[0]">
+      <div *ngFor="let logo of project.logos;let i = index">
+        <img
+          (click)="deleteLogo(project._id, i)"
+          [src]="logo"
+          alt="Logo {{project.name}}">
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="detail-container">
+    <div class="project-header">
+      <div class="title">
+        {{project.name | titlecase}}
+      </div>
+      <div class="location">
+        {{project.city | titlecase}}, {{project.country | titlecase}} - <span
+        class="description-year">{{project.year}}</span>
+      </div>
+    </div>
+    <div class="description-container">
+      <p [@collapseExpand]="isCollapsed ? 'collapsed' : 'expanded'"
+         [ngClass]="{'description-collapsed': isCollapsed && isLongDescription}"
+         class="description">
+        {{project.description}}
+      </p>
+      <button (click)="toggle()" *ngIf="isLongDescription" class="btn btn-outline-dark"
+              type="button"> {{isCollapsed ? 'Show more' : 'Show less'}}</button>
+    </div>
+  </div>
+  <div class="project-picture-container">
+    <div class="project-picture">
+      <ng-container *ngIf="project.pictures[0]">
+        <div *ngFor="let picture of project.pictures;let i = index">
+          <img (click)="deletePicture(project._id, i)" [src]="picture" alt="Project picture">
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
