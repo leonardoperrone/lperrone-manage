@@ -3,6 +3,7 @@ import { BehaviorSubject, from, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/User';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,15 +26,13 @@ export class AuthenticationService {
   }
 
   login(email, password) {
-    return from(this.http.post<any>('http://127.0.0.1:3000/api/v1/users/login', {email, password})).pipe(map(res => {
-      console.log(res);
+    return from(this.http.post<any>(`${environment.apiBaseUrl}/api/v1/users/login`, {email, password})).pipe(map(res => {
       const {data, token} = res;
       const user = new User();
       user._id = data.user._id;
       user.email = data.user.email;
       user.token = token;
       if (data && data.user && token) {
-        console.log('in here');
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         this.isLoggedIn.next(true);
@@ -48,7 +47,7 @@ export class AuthenticationService {
     this.isLoggedIn.next(false);
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    return from(this.http.get('http://127.0.0.1:3000/api/v1/users/logout'));
+    return from(this.http.get(`${environment.apiBaseUrl}/api/v1/users/logout`));
   }
 
   public getToken(): string {
