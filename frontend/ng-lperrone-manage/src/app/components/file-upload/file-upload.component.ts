@@ -18,7 +18,7 @@ export class FileUploadComponent implements ControlValueAccessor {
   @Input() progress;
   @Input() fileName;
   onChange: Function;
-  private files: File[] = [];
+  public files: File[] = [];
 
   constructor(private host: ElementRef<HTMLInputElement>) {
   }
