@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   ): boolean {
 
     const currentUser = this.authService.currentUserValue;
-    if (currentUser.token === this.authService.getToken()) {
+    if (currentUser && currentUser.token === this.authService.getToken()) {
       return true;
     }
 
