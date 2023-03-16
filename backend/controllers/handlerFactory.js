@@ -1,18 +1,28 @@
 const tmp = require('tmp');
-const admin = require('firebase-admin');
 const multer = require('multer');
 const sharp = require('sharp');
+const aws = require('aws-sdk');
+const fs = require('fs');
 
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
-const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+// NOTE: Firebase implementation
+// const admin = require('firebase-admin');
+// const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+// admin.initializeApp({
+//   credential: admin.credential.cert(JSON.parse(serviceAccount)),
+//   storageBucket: 'leonardo-web.appspot.com'
+// });
+// const bucket = admin.storage().bucket();
 
-admin.initializeApp({
-  credential: admin.credential.cert(JSON.parse(serviceAccount)),
-  storageBucket: 'leonardo-web.appspot.com'
+aws.config.update({
+  accessKeyId: process.env.AMAZON_USER_ID,
+  secretAccessKey: process.env.AMAZON_USER_KEY,
+  region: process.env.AMAZON_REGION
 });
-const bucket = admin.storage().bucket();
+
+const s3 = new aws.S3();
 
 const multerStorage = multer.memoryStorage();
 
@@ -110,22 +120,31 @@ exports.getAll = Model =>
   });
 
 exports.deleteLogo = (Model, options) => {
-  const { fileName, paramId } = options;
+  const { fileType, paramId } = options;
   return catchAsync(async (req, res, next) => {
-    const doc = await Model.findById(req.params.id, `${fileName}`, {
+    const doc = await Model.findById(req.params.id, `${fileType}`, {
       lean: true
     });
     const { _id } = doc;
 
-    const logoToRemove = doc[fileName][req.params[paramId]];
+    const logoToRemove = doc[fileType][req.params[paramId]];
     await Model.findByIdAndUpdate(_id, {
-      $pull: { [fileName]: logoToRemove }
+      $pull: { [fileType]: logoToRemove }
     });
 
     // NOTE: this name extraction could be improved to be more stable
     const parsedUrl = logoToRemove.split('/');
-    const filePath = parsedUrl[parsedUrl.length - 1].split('?')[0];
-    await bucket.file(filePath).delete();
+    const filePath = parsedUrl[parsedUrl.length - 1];
+
+    // NOTE: Firebase implementation
+    // await bucket.file(filePath).delete();
+    await s3
+      .deleteObject({
+        Bucket: process.env.AMAZON_BUCKET,
+        Key: filePath
+      })
+      .promise();
+
     res.status(204).json({
       status: 'success',
       data: null
@@ -134,18 +153,25 @@ exports.deleteLogo = (Model, options) => {
 };
 
 exports.deleteStorageFiles = (Model, options) => {
-  const { fileName } = options;
+  const { fileType } = options;
 
   return catchAsync(async (req, res, next) => {
-    const doc = await Model.findById(req.params.id, `${fileName}`, {
+    const doc = await Model.findById(req.params.id, `${fileType}`, {
       lean: true
     });
 
     await Promise.all(
-      doc[fileName].map(async item => {
+      doc[fileType].map(async item => {
         const parsedUrl = item.split('/');
-        const filePath = parsedUrl[parsedUrl.length - 1].split('?')[0];
-        await bucket.file(filePath).delete();
+        const filePath = parsedUrl[parsedUrl.length - 1];
+        await s3
+          .deleteObject({
+            Bucket: process.env.AMAZON_BUCKET,
+            Key: filePath
+          })
+          .promise();
+        // NOTE: Firebase implementation
+        // await bucket.file(filePath).delete();
       })
     );
     next();
@@ -154,17 +180,17 @@ exports.deleteStorageFiles = (Model, options) => {
 
 exports.resizeImages = (Model, options) => {
   return catchAsync(async (req, res, next) => {
-    const { name, format, fileName, sizes } = options;
-    if (!req.files[fileName]) {
-      delete req.body[fileName];
+    const { name, format, fileType, sizes } = options;
+    if (!req.files[fileType]) {
+      delete req.body[fileType];
       return next();
     }
-    req.body[fileName] = [];
+    req.body[fileType] = [];
 
     const tmpObj = tmp.dirSync({ unsafeCleanup: true });
     await Promise.all(
-      req.files[fileName].map(async (file, idx) => {
-        const filename = `${name}-${req.body.name}-${Date.now()}-${idx +
+      req.files[fileType].map(async (file, idx) => {
+        const filename = `${name}-${fileType}-${Date.now()}-${idx +
           1}.${format}`;
 
         await sharp(file.buffer)
@@ -173,27 +199,46 @@ exports.resizeImages = (Model, options) => {
           .png({ quality: 90, progressive: true })
           .toFile(`${tmpObj.name}/${filename}`);
 
-        const uploadOptions = {
-          gzip: true,
-          predefinedAcl: 'publicRead',
-          public: true,
-          metadata: {
-            contentType: 'image/*'
-          }
-        };
+        // NOTE: Firebase implementation
+        // const uploadOptions = {
+        //   gzip: true,
+        //   predefinedAcl: 'publicRead',
+        //   public: true,
+        //   metadata: {
+        //     contentType: 'image/*'
+        //   }
+        // };
+        //
+        // await bucket.upload(`${tmpObj.name}/${filename}`, uploadOptions);
+        // const metadata = await bucket.file(`${filename}`).getMetadata();
+        // req.body[fileType].push(metadata[0].mediaLink);
 
-        await bucket.upload(`${tmpObj.name}/${filename}`, uploadOptions);
-        const metadata = await bucket.file(`${filename}`).getMetadata();
-        req.body[fileName].push(metadata[0].mediaLink);
+        await s3
+          .putObject({
+            Bucket: process.env.AMAZON_BUCKET,
+            Body: fs.readFileSync(`${tmpObj.name}/${filename}`),
+            Key: filename,
+            ACL: 'public-read'
+          })
+          .promise();
+
+        const s3Object = await s3.getObject({
+          Bucket: process.env.AMAZON_BUCKET,
+          Key: filename
+        });
+
+        const fullUrl = `${s3Object.httpRequest.endpoint.protocol}//${process.env.AMAZON_BUCKET}.${s3Object.httpRequest.endpoint.host}/${filename}`;
+
+        req.body[fileType].push(fullUrl);
       })
     );
 
     tmpObj.removeCallback();
     if (req.route.methods.patch) {
       await Model.findByIdAndUpdate(req.params.id, {
-        $push: { [fileName]: req.body[fileName] }
+        $push: { [fileType]: req.body[fileType] }
       });
-      delete req.body[fileName];
+      delete req.body[fileType];
     }
     next();
   });

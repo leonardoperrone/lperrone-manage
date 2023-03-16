@@ -23,27 +23,26 @@ const app = express();
 app.enable('trust proxy');
 
 // GLOBAL MIDDLEWARE
-// Implemente cors, Access-Control-Allow-Origin *
+// Implement cors, Access-Control-Allow-Origin *
 app.use(cors());
 
 // NOTE: with this below we would allow our frontend to access our api on the server
+
+const whitelist = process.env.FRONTEND_PROD_URL.split(',');
 
 app.use(
   cors({
     origin:
       process.env.NODE_ENV === 'development'
         ? process.env.FRONTEND_LOCAL_URL
-        : process.env.FRONTEND_PROD_URL
+        : whitelist
   })
 );
-
-// app.options('*', cors());
 
 // To allow cors on a specific path do the following
 // app.options('/api/v1/tours/:id', cors());
 
 // Serving static files
-// app.use(express.static(`${__dirname}/public`));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set security HTTP headers
@@ -85,6 +84,11 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
+app.all('/', (req, res, next) => {
+  res.status(200).json({
+    status: 'success'
+  });
+});
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/technologies', technologyRouter);
 app.use('/api/v1/projects', projectRouter);

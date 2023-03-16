@@ -1,0 +1,182 @@
+.tech-container {
+  font-family: "Avenir Next", sans-serif;
+  color: #000000;
+  letter-spacing: 0;
+  height: 580px;
+}
+
+.logo {
+  width: 100px;
+  float: left;
+}
+.logo img {
+  width: 80%;
+  margin-bottom: 32px;
+  float: right;
+}
+
+.detail-container {
+  border: 1px solid #979797;
+  width: 447px;
+  height: 100%;
+  float: right;
+}
+
+.tech-header {
+  height: 150px;
+}
+
+.title {
+  float: left;
+  font-size: 35px;
+  font-weight: bold;
+  padding: 25px;
+  max-width: 280px;
+}
+
+.progress-bar {
+  float: right;
+  background-color: #fff;
+  text-align: right;
+  padding: 25px;
+}
+
+.description {
+  width: auto;
+  font-size: 18px;
+  color: #4A4A4A;
+  line-height: 30px;
+  margin-left: 25px;
+  margin-top: 40px;
+  margin-right: 25px;
+}
+
+.edit-button-container {
+  float: right;
+  padding-bottom: 30px;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 1440px) {
+  .detail-container {
+    width: 400px;
+    float: left;
+  }
+
+  .title {
+    max-width: 220px;
+    font-size: 25px;
+  }
+
+  .logo {
+    width: 70px;
+    white-space: nowrap;
+    margin-bottom: 20px;
+  }
+  .logo img {
+    margin-right: 15px;
+    width: 85%;
+    margin-bottom: 0;
+    float: none;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .detail-container {
+    width: 500px;
+    height: auto;
+  }
+
+  .logo {
+    float: none;
+  }
+}
+@media screen and (max-width: 768px) {
+  .detail-container {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 550px) {
+  .detail-container {
+    width: 300px;
+  }
+
+  .progress-bar {
+    padding: 15px 5px 15px 0;
+  }
+
+  .project-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-header .title {
+    padding-right: 0;
+  }
+}
+@media screen and (max-width: 425px) {
+  .tech-container {
+    width: 320px;
+  }
+
+  .project-header {
+    margin-bottom: 20px;
+  }
+
+  .detail-container {
+    width: 320px;
+  }
+
+  .title {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 25px;
+    max-width: 150px;
+    float: none;
+  }
+
+  .logo {
+    width: 50px;
+    white-space: nowrap;
+    margin-left: 10px;
+  }
+  .logo img {
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+
+  .progress-bar {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+  }
+}
+@media screen and (max-width: 375px) {
+  .tech-container .detail-container {
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .detail-container .description {
+    margin-top: 25px;
+  }
+
+  .logo {
+    white-space: nowrap;
+  }
+  .logo img {
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .logo {
+    margin-left: 20px;
+  }
+}
+
+/*# sourceMappingURL=technology-detail.component.css.map */

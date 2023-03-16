@@ -11,17 +11,17 @@ exports.uploadTechFiles = factory.setFields([
 exports.resizeTechPictures = factory.resizeImages(Technology, {
   name: 'tech',
   format: 'png',
-  fileName: 'logos',
+  fileType: 'logos',
   sizes: [150]
 });
 
 exports.deleteTechLogo = factory.deleteLogo(Technology, {
-  fileName: 'logos',
+  fileType: 'logos',
   paramId: 'logoId'
 });
 
 exports.deleteTechnologyLogos = factory.deleteStorageFiles(Technology, {
-  fileName: 'logos'
+  fileType: 'logos'
 });
 
 // ROUTE HANDLERS
