@@ -13,31 +13,31 @@ exports.uploadProjectFiles = factory.setFields([
 exports.resizeProjectLogos = factory.resizeImages(Project, {
   name: 'project',
   format: 'png',
-  fileName: 'logos',
+  fileType: 'logos',
   sizes: [150]
 });
 
 exports.resizeProjectPictures = factory.resizeImages(Project, {
   name: 'project',
   format: 'jpg',
-  fileName: 'pictures',
+  fileType: 'pictures',
   sizes: [390, 260]
 });
 
 exports.deleteProjectLogos = factory.deleteStorageFiles(Project, {
-  fileName: 'logos'
+  fileType: 'logos'
 });
 
 exports.deleteProjectPictures = factory.deleteStorageFiles(Project, {
-  fileName: 'pictures'
+  fileType: 'pictures'
 });
 
 exports.deleteProjectLogo = factory.deleteLogo(Project, {
-  fileName: 'logos',
+  fileType: 'logos',
   paramId: 'logoId'
 });
 exports.deleteProjectPicture = factory.deleteLogo(Project, {
-  fileName: 'pictures',
+  fileType: 'pictures',
   paramId: 'picId'
 });
 

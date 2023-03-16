@@ -36,7 +36,7 @@ const technologySchema = new mongoose.Schema({
 
 const getExpColor = function(experience) {
   let hexColor = '#FFFFFF';
-  if (experience < 20) {
+  if (experience <= 20) {
     hexColor = '#49FFD6';
   } else if (experience > 21 && experience < 40) {
     hexColor = '#6EFF6F';

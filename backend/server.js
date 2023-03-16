@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const wakeUpDyno = require('./utils/wakeUpDyno');
 
 process.on('uncaughtException', err => {
   console.log('UNCAUGHT EXCEPTION, shutting down....');
@@ -26,10 +27,9 @@ mongoose
   .then(() => {
     console.log('DB Connection successful!');
   });
-// console.log(app.get('env'));
-// console.log(process.env);
 
 const port = process.env.PORT || 3000;
+
 const server = app.listen(port, () => {
   console.log('App running on port ', port);
 });
