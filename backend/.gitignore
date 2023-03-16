@@ -48,6 +48,7 @@ testem.log
 backend/private/
 *.env
 .idea
+*.map
 
 # System Files
 .DS_Store
